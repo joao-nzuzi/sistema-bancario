@@ -13,7 +13,7 @@ Neste desafio foi solicitado a simulação do comportamento de um sistema bancá
 ## Regras para operação de levantamento / saque
 * É apenas permitido o levantamento de valores positivos.
 	Ex.: 1, 10, 500, 563.36, etc.
-* É apenas permitdo 2 levantamentos / saques por dia.
+* É apenas permitdo 3 levantamentos / saques por dia.
 * É apenas permitdo o levantamento de R$ 500 por cada levantamento / saque.
 * Armazenar os levantamentos em uma variável e exibir na operação extrato.
 
