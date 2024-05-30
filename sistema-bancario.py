@@ -9,9 +9,8 @@ menu = """
 
 NUMERO_LEVANTAMENTO_DIARIO_PERMITIDO = 3
 LIMITE_LEVANTAMENTO_DIARIO_PERMITIDO = 500
-extrato = 0
 saldo = 0
-levantamento = ""
+extrato = ""
 numero_levantamento_feitos = 0
 
 while True:
@@ -20,9 +19,7 @@ while True:
         valor = float(input('Informa o valor que deseja depositar: '))
         if valor >= 0:
             saldo += valor
-            extrato += valor
-            print('Depóstio feito com sucesso')
-            print(f"Movimentos da conta: R$ {extrato:.2f}")
+            extrato += f"Depósito feito com sucesso. Valor depositado: R$ {valor:.2f}\n"
         else:
             print("É apenas permitido depósito de valor positivo. Por favor, informa um valor positivo.")
             
@@ -32,10 +29,8 @@ while True:
             if valor <= saldo:
                 if valor >= 0 and valor <= LIMITE_LEVANTAMENTO_DIARIO_PERMITIDO:
                     saldo -= valor
-                    extrato -= valor
+                    extrato += f"Levantamento feito com sucesso. Valor levantado: R$ {valor:.2f}\n"
                     numero_levantamento_feitos += 1
-                    print('Levantamento feito com sucesso')
-                    print(f"Movimentos da conta: R$ {extrato:.2f}")
                 else:
                     print(f"Excedeu o limite do valor máximo permitido por levantamento. Só é permitido levantar R$ {LIMITE_LEVANTAMENTO_DIARIO_PERMITIDO:.2f} por vez.")
             else:
@@ -44,7 +39,10 @@ while True:
             print(f"Excedeu o nº de levantamento permitidos por dia. Só é permitido {NUMERO_LEVANTAMENTO_DIARIO_PERMITIDO} por dia")
             
     elif opcao == '3':
-        print("extrato")
+        print(f"""****** Movimentos da conta: ******\n{ "Não foram realizados movimentos na conta. " if not extrato else extrato.strip()}""" )
+        print()
+        print(f"Saldo actual: {saldo:.2f}")
+        
     elif opcao == '4':
         break
     else:
