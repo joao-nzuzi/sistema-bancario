@@ -27,12 +27,15 @@ while True:
         if numero_levantamento_feitos >= 0 and numero_levantamento_feitos <= NUMERO_LEVANTAMENTO_DIARIO_PERMITIDO - 1:
             valor = float(input('Informa o valor que deseja levantar: '))
             if valor <= saldo:
-                if valor >= 0 and valor <= LIMITE_LEVANTAMENTO_DIARIO_PERMITIDO:
-                    saldo -= valor
-                    extrato += f"Levantamento feito com sucesso. Valor levantado: R$ {valor:.2f}\n"
-                    numero_levantamento_feitos += 1
+                if valor >= 0:
+                    if valor <= LIMITE_LEVANTAMENTO_DIARIO_PERMITIDO:
+                        saldo -= valor
+                        extrato += f"Levantamento feito com sucesso. Valor levantado: R$ {valor:.2f}\n"
+                        numero_levantamento_feitos += 1
+                    else:
+                        print(f"Excedeu o limite do valor máximo permitido por levantamento. Só é permitido levantar R$ {LIMITE_LEVANTAMENTO_DIARIO_PERMITIDO:.2f} por vez.")
                 else:
-                    print(f"Excedeu o limite do valor máximo permitido por levantamento. Só é permitido levantar R$ {LIMITE_LEVANTAMENTO_DIARIO_PERMITIDO:.2f} por vez.")
+                    print("É apenas permitido levantamento de valor positivo. Por favor, informa um valor positivo.")
             else:
                 print("Não é possivel levantar o dinheiro por falta de saldo na conta.")
         else:
