@@ -51,6 +51,11 @@ def levantar(*, saldo, extrato, limite_levantamento_diario, numero_levantamento_
     
     return saldo, extrato
 
+def extrato_bancario(saldo, /, *, extrato):
+    print(f"""****** Movimentos da conta aos {datetime.datetime.date()} ******\n{ "Não foram realizados movimentos na conta. " if not extrato else extrato.strip()}""" )
+    print()
+    print(f"Saldo actual: {saldo:.2f}")
+    
 
 
 def executar():
