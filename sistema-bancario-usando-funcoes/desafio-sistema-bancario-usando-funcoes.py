@@ -1,6 +1,6 @@
 
 import textwrap
-import datetime, pytz 
+import datetime
 
 def menu():
     menu = """
@@ -13,13 +13,13 @@ def menu():
         [6] - Listar Contas
         [7] - Sair
     """
-    return input(textwrap.dedent(menu))
+    return input(textwrap.dedent(menu)+"\n")
 
 def depositar(saldo, extrato, valor, /):
     
     if valor >= 0:
         saldo += valor
-        extrato += f"Foi depositado: R$ {valor:.2f} aos {datetime.datetime.now(pytz.timezone('Africa/Luanda'))}\n"
+        extrato += f"Foi depositado: R$ {valor:.2f} aos {datetime.datetime.now().strftime('%H:%M:%S')}\n"
         print("Depósito feito com sucesso")
     
     else:
@@ -31,13 +31,14 @@ def levantar(*, saldo, extrato, limite_levantamento_diario, numero_levantamento_
     
     if numero_levantamento_feitos >= 0 and numero_levantamento_feitos <= numero_levantamento_diario - 1:
         
-        valor = float(input('Informa o valor que deseja levantar: '))
+        valor = float(input('\nInforma o valor que deseja levantar: '))
         
         if valor <= saldo:
             if valor >= 0:
                 if valor <= limite_levantamento_diario:
                     saldo -= valor
-                    extrato += f"Foi levantado: R$ {valor:.2f} aos {datetime.datetime.now(pytz.timezone('Africa/Luanda'))}\n"
+                    global hora
+                    extrato += f"Foi levantado: R$ {valor:.2f} aos {datetime.datetime.now().strftime('%H:%M:%S')}\n"
                     numero_levantamento_feitos += 1
                     print("Depósito feito com sucesso")
                 else:
@@ -52,11 +53,19 @@ def levantar(*, saldo, extrato, limite_levantamento_diario, numero_levantamento_
     return saldo, extrato
 
 def extrato_bancario(saldo, /, *, extrato):
-    print(f"""****** Movimentos da conta aos {datetime.datetime.date()} ******\n{ "Não foram realizados movimentos na conta. " if not extrato else extrato.strip()}""" )
+    print(f"""\n****** Movimentos da conta aos {datetime.date.today()} ******\n{ "Não foram realizados movimentos na conta. " if not extrato else extrato.strip()}""" )
     print()
     print(f"Saldo actual: {saldo:.2f}")
     
+def cadastrar_cliente(nome, data_nascimento, cpf, endereco):
+    clientes = {"Nome": nome, "Data Nascimento": data_nascimento, "CPF": cpf, "Endereço": endereco}
+    print(clientes)
 
+def filtrar_clientes(cpf, clientes):
+    pass
+
+def criar_contas(agencia, numero_conta, clientes):
+    pass
 
 def executar():
     NUMERO_LEVANTAMENTO_DIARIO_PERMITIDO = 3
@@ -72,7 +81,7 @@ def executar():
         opcao = menu()
         
         if opcao == '1':
-            valor = float(input('Informa o valor que deseja depositar: '))
+            valor = float(input('\nInforma o valor que deseja depositar: '))
             
             saldo, extrato = depositar(saldo, extrato, valor)
                 
@@ -105,4 +114,5 @@ def executar():
             break
         else:
             print('Operação inválida. Por favor, informa novamente a operação que deseja realizar')
+            
 executar()
