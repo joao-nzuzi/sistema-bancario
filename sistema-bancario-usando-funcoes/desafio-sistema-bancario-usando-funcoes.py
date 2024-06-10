@@ -77,8 +77,18 @@ def filtrar_cliente(cpf, clientes):
     
     return cliente_filtrado[0] if cliente_filtrado else None
 
-def criar_contas(agencia, numero_conta, clientes):
-    pass
+def criar_contas(agencia, contas, clientes):
+    
+    num_documento = input('Informa o numero do documento: ')
+    cliente = filtrar_cliente(num_documento, clientes)
+    
+    numero_conta = len(contas) + 1
+    
+    if cliente:
+        print(f"\nConta criada com sucesso aos {datetime.date.today()} para o cliente {cliente}\n")
+        return {"Agência": agencia, "Nº Conta": numero_conta, "Cliente": cliente}
+    else:
+        print("\nCliente não encontrado. Impossivel cria a conta")
 
 def executar():
     NUMERO_LEVANTAMENTO_DIARIO_PERMITIDO = 3
@@ -114,7 +124,10 @@ def executar():
             cadastrar_cliente(clientes)
             
         elif opcao == '5':
-            break
+            nova_conta = criar_contas(AGENCIA, contas, clientes)
+            if nova_conta:
+                contas.append(nova_conta)
+                print(f"Dados da conta: {nova_conta}")
         
         elif opcao == '6':
             break
