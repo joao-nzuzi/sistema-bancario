@@ -57,12 +57,25 @@ def extrato_bancario(saldo, /, *, extrato):
     print()
     print(f"Saldo actual: {saldo:.2f}")
     
-def cadastrar_cliente(nome, data_nascimento, cpf, endereco):
-    clientes = {"Nome": nome, "Data Nascimento": data_nascimento, "CPF": cpf, "Endereço": endereco}
-    print(clientes)
+def cadastrar_cliente(clientes):
+    nome_cliente = input("Informa o nome completo: ")
+    datanasc = input("Informa a data de nascimento (dd-MM-yyy): ")
+    numero_documento = input("Informa o nº do documento: ")
+    morada = input("Informa O endereço: rua, º casa, bairro - cidade/sigla estado: ")
+            
+    cliente = filtrar_cliente(numero_documento, clientes)
+    
+    if cliente:
+        print("\n\nJá existe um cliente com este num de documento")
+    else:
+        cliente = {"Nome": nome_cliente, "Data Nascimento": datanasc, "CPF": numero_documento, "Endereço": morada}
+        clientes.append(cliente)
+        print(f'Cliente {cliente} cadastrado com sucesso aos {datetime.date.today()}')
 
-def filtrar_clientes(cpf, clientes):
-    pass
+def filtrar_cliente(cpf, clientes):
+    cliente_filtrado = [cliente for cliente in clientes if cliente["CPF"] == cpf]
+    
+    return cliente_filtrado[0] if cliente_filtrado else None
 
 def criar_contas(agencia, numero_conta, clientes):
     pass
@@ -98,11 +111,7 @@ def executar():
              extrato_bancario(saldo, extrato=extrato)
              
         elif opcao == '4':
-            nome_cliente = input("Informa o nome do cliente")
-            datanasc = input("Informa a data do cliente")
-            numero_docmento = input("Informa o nº do documento")
-            morada = input("Informa O endereço: rua, º casa, bairro - cidade/sigla estado")
-            cadastrar_cliente(nome_cliente, datanasc, numero_docmento, morada)
+            cadastrar_cliente(clientes)
             
         elif opcao == '5':
             break
