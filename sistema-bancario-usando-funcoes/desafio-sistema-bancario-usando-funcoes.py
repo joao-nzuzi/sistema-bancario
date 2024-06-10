@@ -68,12 +68,12 @@ def cadastrar_cliente(clientes):
     if cliente:
         print("\n\nJá existe um cliente com este num de documento")
     else:
-        cliente = {"Nome": nome_cliente, "Data Nascimento": datanasc, "CPF": numero_documento, "Endereço": morada}
+        cliente = {"nome": nome_cliente, "data_ascimento": datanasc, "cpf": numero_documento, "endereco": morada}
         clientes.append(cliente)
         print(f'Cliente {cliente} cadastrado com sucesso aos {datetime.date.today()}')
 
 def filtrar_cliente(cpf, clientes):
-    cliente_filtrado = [cliente for cliente in clientes if cliente["CPF"] == cpf]
+    cliente_filtrado = [cliente for cliente in clientes if cliente["cpf"] == cpf]
     
     return cliente_filtrado[0] if cliente_filtrado else None
 
@@ -86,9 +86,21 @@ def criar_contas(agencia, contas, clientes):
     
     if cliente:
         print(f"\nConta criada com sucesso aos {datetime.date.today()} para o cliente {cliente}\n")
-        return {"Agência": agencia, "Nº Conta": numero_conta, "Cliente": cliente}
+        return {"agencia": agencia, "numero_conta": numero_conta, "cliente": cliente}
     else:
         print("\nCliente não encontrado. Impossivel cria a conta")
+
+def listar_contas(contas):
+    print("\n*" * 20 +" Contas existentes no banco"+"*" * 20)
+    if len(contas) > 0:
+        for conta in contas:
+            print(f'''
+                  Tilutar: {conta['cliente']['nome']}
+                  Agência: {conta['agencia']}
+                  Nº Conta: {conta['numero_conta']}
+                  Morada: {conta['cliente']['endereco']}
+                  ''')
+    # print([conta for conta in contas if len(contas) > 0])
 
 def executar():
     NUMERO_LEVANTAMENTO_DIARIO_PERMITIDO = 3
@@ -130,7 +142,7 @@ def executar():
                 print(f"Dados da conta: {nova_conta}")
         
         elif opcao == '6':
-            break
+            listar_contas(contas)
             
         elif opcao == '7':
             break
